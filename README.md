@@ -1,27 +1,92 @@
-# AsyncPipe
+Async pipe- Observable
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.2.
+Async pipe is used if we want to get the value directly from the observable and showcase in the UI without storing the value into a variable or subscribing the observable.
 
-## Development server
+Ts file
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+list = of([10,20,30]);
 
-## Code scaffolding
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+html file
 
-## Build
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+<ng-container *ngFor="let val of list |async">
+{{val}}
+</ng-container>
 
-## Running unit tests
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+Whenever we are using async it will get the observable ( here ‘list’ ) subscribe to it and extract the data and give it to ‘ val’.
 
-## Running end-to-end tests
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+Output
 
-## Further help
+10 20 30
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+
+Another example of sync using *ngIf
+
+
+ts file
+
+show = of(true);
+
+
+html file
+
+
+<ng-container *ngIf="show |async">
+Bini is visible
+</ng-container>
+
+
+Output
+
+Bini is visible
+
+
+Here ‘show’ variable is set to true (using this statement   show = of(true)   )  hence the value in ng-container (i.e. Bini is visible ) is visible.
+
+Whenever you want to showcase asynchronous data into the html then you can use async. When the observable updates automatically data in the html also automatically updates.
+
+
+
+
+data!: Observable<any>
+http: HttpClient = inject(HttpClient);
+constructor() {
+this.getList();
+}
+
+getList(): void {
+this.data = this.http.get(`https://jsonplaceholder.typicode.com/todos`);
+}
+
+
+
+
+<ng-container *ngFor="let item of data | async">
+<p>
+{{item.title}}
+</p>
+</ng-container>
+
+
+
+
+Output
+
+
+delectus aut autem
+quis ut nam facilis et officia qui
+fugiat veniam minus
+et porro tempora
+laboriosam mollitia et enim quasi adipisci quia provident illum
+qui ullam ratione quibusdam voluptatem quia omnis
+illo expedita consequatur quia in
+quo adipisci enim quam ut ab
+molestiae perspiciatis ipsa
+illo est ratione doloremque quia maiores aut
+vero rerum temporibus dolor
+ipsa repellendus fugit nisi
+et doloremque nulla
+repellendus sunt dolores architecto voluptatum
